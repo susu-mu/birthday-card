@@ -55,29 +55,14 @@ h1 {
   perspective: 800px;
 }
 
-/* 信封內部的前方口袋 */
-.envelope::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #d9bda2;
-  clip-path: polygon(
-    0 35%,
-    50% 100%,
-    100% 35%,
-    100% 100%,
-    0 100%
-  );
-  z-index: 3;
-}
-
 /* 信紙 */
 .letter {
   position: absolute;
   left: 8%;
   width: 84%;
   height: 175px;
-  top: 15px;
+  top: 18px;
+
   background: #fffdf8;
 
   display: flex;
@@ -87,17 +72,40 @@ h1 {
   font-size: 19px;
   letter-spacing: 3px;
 
-  /* 初始位置：藏在信封裡 */
-  transform: translateY(70px);
+  /* 一開始完全位於信封內 */
+  transform: translateY(55px);
 
-  transition: transform 1s ease;
+  transition: transform 0.9s ease;
   z-index: 2;
+}
+
+/* 信封前片：真正遮住信紙 */
+.envelope::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 145px;
+
+  background: #d9bda2;
+
+  clip-path: polygon(
+    0 0,
+    50% 55%,
+    100% 0,
+    100% 100%,
+    0 100%
+  );
+
+  z-index: 3;
 }
 
 /* 信封上蓋 */
 .flap {
   position: absolute;
   inset: 0;
+
   background: #b99070;
 
   clip-path: polygon(
@@ -112,15 +120,15 @@ h1 {
   z-index: 4;
 }
 
-/* 點擊後：先打開上蓋 */
+/* 打開時，上蓋先翻開 */
 .envelope.open .flap {
   transform: rotateX(180deg);
   z-index: 1;
 }
 
-/* 點擊後：稍等一下，信紙再升起 */
+/* 打開後，信紙才往上抽出 */
 .envelope.open .letter {
-  transform: translateY(-125px);
+  transform: translateY(-115px);
   transition-delay: 0.45s;
 }
 
