@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>給最親愛的妳</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Noto Serif TC", "Microsoft JhengHei", serif;
+  background: #f8f2e9;
+  color: #6c5547;
+  text-align: center;
+}
+
+section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+
+.cover {
+  background: linear-gradient(145deg, #fbf5eb, #ead9c7);
+  overflow: hidden;
+}
+
+.small {
+  letter-spacing: 4px;
+  font-size: 13px;
+  color: #9d806b;
+}
+
+h1 {
+  font-weight: 400;
+  letter-spacing: 3px;
+}
+
+.envelope {
+  position: relative;
+  width: min(78vw, 340px);
+  height: 210px;
+  margin: 45px auto 20px;
+  background: #c9a98c;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 15px 35px #80654b30;
+  perspective: 800px;
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #d9bda2;
+  clip-path: polygon(0 0, 100% 0, 50% 65%);
+  z-index: 3;
+}
+
+.flap {
+  position: absolute;
+  inset: 0;
+  background: #b99070;
+  clip-path: polygon(0 0, 100% 0, 50% 65%);
+  transform-origin: top;
+  transition: transform 0.8s ease;
+  z-index: 4;
+}
+
+.letter {
+  position: absolute;
+  left: 8%;
+  width: 84%;
+  height: 175px;
+  top: 15px;
+  background: #fffdf8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 19px;
+  letter-spacing: 3px;
+  transition: transform 1s ease;
+  z-index: 2;
+}
+
+.envelope.open .flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope.open .letter {
+  transform: translateY(-125px);
+}
+
+.open-hint {
+  margin-top: 20px;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #987b65;
+}
+
+.message {
+  background: #fffaf3;
+  line-height: 2.2;
+  padding: 30px;
+}
+
+.message p {
+  max-width: 520px;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.heart {
+  color: #bc8178;
+  font-size: 26px;
+  margin: 15px;
+}
+
+button {
+  border: 1px solid #b99577;
+  color: #80634d;
+  background: transparent;
+  border-radius: 30px;
+  padding: 13px 30px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.video-section {
+  background: #191817;
+  color: #fff5e9;
+  padding: 0;
+  position: relative;
+}
+
+.video-wrap {
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+video {
+  width: 100%;
+height: 100%;
+object-fit: contain;
+background: #191817;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #191817;
+}
+.rotate-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: #f8f2e9;
+  color: #745b49;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 30px;
+}
+
+.rotate-icon {
+  font-size: 55px;
+  margin-bottom: 20px;
+}
+
+.video-section.active .rotate-overlay {
+  display: none;
+}
+
+@media (orientation: portrait) and (max-width: 900px) {
+  .video-section.active .rotate-overlay {
+    display: flex;
+  }
+}
+
+.play-button {
+  position: absolute;
+  z-index: 5;
+  background: #f8f2e9;
+  color: #745b49;
+  border: none;
+  padding: 16px 28px;
+  border-radius: 40px;
+}
+
+.play-button.hidden {
+  display: none;
+}
+
+.final {
+  background: #f1e3d4;
+}
+</style>
+</head>
+
+<body>
+
+<section class="cover" id="cover">
+  <p class="small">A LITTLE SURPRISE FOR YOU</p>
+  <h1>給最親愛的妳</h1>
+
+  <div class="envelope" id="envelope" onclick="openLetter()">
+    <div class="letter">生日快樂 ♡</div>
+    <div class="flap"></div>
+  </div>
+
+  <p class="open-hint">輕輕點開這封信</p>
+</section>
+
+<section class="message" id="message">
+  <p class="small">HAPPY BIRTHDAY</p>
+  <h1>生日快樂 ♡</h1>
+
+  <p>
+    又一起走過了一年的時光。<br>
+    謝謝妳一直以來的陪伴，<br>
+    也謝謝那些平凡卻珍貴的日常。
+  </p>
+
+  <p>
+    希望未來的每一天，<br>
+    都能有值得期待的小事，<br>
+    也希望我們能繼續一起創造回憶。
+  </p>
+
+  <div class="heart">♡</div>
+
+  <button onclick="showVideo()">還有一份小小的驚喜 →</button>
+</section>
+
+<section class="video-section" id="videoSection">
+  <div class="video-wrap">
+    <iframe
+  id="birthdayVideo"
+  src="https://www.youtube-nocookie.com/embed/xTCm4xobS2Yplaysinline=1&rel=0"
+  title="生日驚喜影片"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
+    
+  </div>
+
+  <div class="rotate-overlay">
+    <div class="rotate-icon">⟳</div>
+    <h2>請將手機橫過來 ♡</h2>
+    <p>把畫面轉成橫式，一起看看這份驚喜吧。</p>
+  </div>
+</section>
+
+<section class="final">
+  <h1>願往後的每一年</h1>
+  <p>我們都能一起留下更多美好的回憶。</p>
+  <div class="heart">♡</div>
+  <p>生日快樂！</p>
+</section>
+
+<script>
+function openLetter() {
+  const envelope = document.getElementById("envelope");
+  envelope.classList.add("open");
+
+  setTimeout(() => {
+    document.getElementById("message").scrollIntoView({
+      behavior: "smooth"
+    });
+  }, 1100);
+}
+
+function showVideo() {
+  const section = document.getElementById("videoSection");
+  section.classList.add("active");
+
+  section.scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+
+
+  
+</script>
+
+</body>
+</html>
