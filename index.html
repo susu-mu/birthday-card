@@ -55,25 +55,23 @@ h1 {
   perspective: 800px;
 }
 
+/* 信封內部的前方口袋 */
 .envelope::before {
   content: "";
   position: absolute;
   inset: 0;
   background: #d9bda2;
-  clip-path: polygon(0 0, 100% 0, 50% 65%);
+  clip-path: polygon(
+    0 35%,
+    50% 100%,
+    100% 35%,
+    100% 100%,
+    0 100%
+  );
   z-index: 3;
 }
 
-.flap {
-  position: absolute;
-  inset: 0;
-  background: #b99070;
-  clip-path: polygon(0 0, 100% 0, 50% 65%);
-  transform-origin: top;
-  transition: transform 0.8s ease;
-  z-index: 4;
-}
-
+/* 信紙 */
 .letter {
   position: absolute;
   left: 8%;
@@ -81,26 +79,46 @@ h1 {
   height: 175px;
   top: 15px;
   background: #fffdf8;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   font-size: 19px;
   letter-spacing: 3px;
 
-  /* 未開啟時藏在信封裡 */
+  /* 初始位置：藏在信封裡 */
   transform: translateY(70px);
 
-  /* 信紙升起動畫 */
   transition: transform 1s ease;
-
   z-index: 2;
 }
 
+/* 信封上蓋 */
+.flap {
+  position: absolute;
+  inset: 0;
+  background: #b99070;
+
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    50% 65%
+  );
+
+  transform-origin: top;
+  transition: transform 0.8s ease;
+
+  z-index: 4;
+}
+
+/* 點擊後：先打開上蓋 */
 .envelope.open .flap {
   transform: rotateX(180deg);
   z-index: 1;
 }
 
+/* 點擊後：稍等一下，信紙再升起 */
 .envelope.open .letter {
   transform: translateY(-125px);
   transition-delay: 0.45s;
@@ -223,14 +241,14 @@ iframe {
 
 <section class="cover" id="cover">
   <p class="small">A LITTLE SURPRISE FOR YOU</p>
-  <h1>給最親愛的妳</h1>
+  <h1>給最親愛的璟</h1>
 
   <div class="envelope" id="envelope" onclick="openLetter()">
     <div class="letter">生日快樂 ♡</div>
     <div class="flap"></div>
   </div>
 
-  <p class="open-hint">輕輕點開這封信</p>
+  <p class="open-hint">打開這封信</p>
 </section>
 
 <section class="message" id="message">
@@ -239,8 +257,8 @@ iframe {
 
   <p>
     又一起走過了一年的時光。<br>
-    謝謝妳一直以來的陪伴，<br>
-    也謝謝那些平凡卻珍貴的日常。
+    妳一直以來的陪伴，<br>
+    溫暖那些平凡卻珍貴的日常。
   </p>
 
   <p>
@@ -251,7 +269,7 @@ iframe {
 
   <div class="heart">♡</div>
 
-  <button onclick="showVideo()">還有一份小小的驚喜 →</button>
+  <button onclick="showVideo()">下一頁祝福~ →</button>
 </section>
 
 <section class="video-section" id="videoSection">
