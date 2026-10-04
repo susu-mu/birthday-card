@@ -86,7 +86,13 @@ h1 {
   align-items: center;
   font-size: 19px;
   letter-spacing: 3px;
+
+  /* 未開啟時藏在信封裡 */
+  transform: translateY(70px);
+
+  /* 信紙升起動畫 */
   transition: transform 1s ease;
+
   z-index: 2;
 }
 
@@ -97,6 +103,7 @@ h1 {
 
 .envelope.open .letter {
   transform: translateY(-125px);
+  transition-delay: 0.45s;
 }
 
 .open-hint {
